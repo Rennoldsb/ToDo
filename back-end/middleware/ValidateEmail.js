@@ -8,13 +8,4 @@ const ValidateEmail = (inputText) => {
   }
 };
 
-const ValidatePassword = (inputText) => {
-  const passwordFormat =
-    /^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&-+=()])(?=\\S+$).{8, 20}$/;
-
-  if (inputText.match(passwordFormat)) {
-    return true;
-  } else return false;
-};
-
-(module.exports = ValidateEmail), ValidatePassword;
+module.exports = ValidateEmail;

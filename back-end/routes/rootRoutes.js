@@ -2,11 +2,11 @@ var express = require('express');
 var router = express.Router();
 const User = require('../models/user');
 const passport = require('passport');
-const ValidateEmail = require('../middleware/Validations');
-const ValidatePassword = require('../middleware/Validations');
+const ValidateEmail = require('../middleware/ValidateEmail');
+const ValidatePassword = require('../middleware/ValidatePassword');
 
 router.get('/user', (req, res) => {
-  res.send('Hello world!');
+  res.send(req.user);
 });
 
 router.post('/register', async (req, res) => {
@@ -16,7 +16,7 @@ router.post('/register', async (req, res) => {
   }
 
   if (!ValidatePassword(req.body.password)) {
-    res.send('Does not meet password requirements');
+    res.send('Does not meet password requirements.');
     return false;
   }
 
@@ -43,7 +43,7 @@ router.post('/register', async (req, res) => {
 });
 
 router.post('/login', passport.authenticate('local'), function (req, res) {
-  res.send(req.user);
+  res.send('Logged In!');
 });
 
 module.exports = router;
