@@ -11,14 +11,21 @@ router.get('/user', (req, res) => {
 
 router.post('/register', async (req, res) => {
   if (!ValidateEmail(req.body.username)) {
-    res.send('Must be a valid email');
+    res.status(400).send('Must be a valid email');
     return false;
   }
 
   if (!ValidatePassword(req.body.password)) {
-    res.send('Does not meet password requirements.');
+    res.status(400).send('Does not meet password requirements.');
     return false;
   }
+
+  User.findOne({ username: req.body.username }, (err, existingUser) => {
+    if (existingUser) {
+      res.status(400).send('User already exists');
+      return false;
+    }
+  });
 
   try {
     User.register(
@@ -29,20 +36,22 @@ router.post('/register', async (req, res) => {
       req.body.password,
       (err, user) => {
         if (err) {
-          console.log(err);
+          res.status(400).send(err);
         } else {
           passport.authenticate('local')(req, res, () => {
-            res.send(user);
+            //Change to your preferred action
+            res.redirect('/');
           });
         }
       }
     );
-  } catch (error) {
-    console.log();
+  } catch (e) {
+    res.status(400).send(err);
   }
 });
 
 router.post('/login', passport.authenticate('local'), function (req, res) {
+  //Change to your preferred action
   res.send('Logged In!');
 });
 
