@@ -40,7 +40,7 @@ router.post('/register', async (req, res) => {
         } else {
           passport.authenticate('local')(req, res, () => {
             //Change to your preferred action
-            res.redirect('/');
+            res.send('Successfully Registered!');
           });
         }
       }
@@ -52,7 +52,7 @@ router.post('/register', async (req, res) => {
 
 router.post('/login', passport.authenticate('local'), function (req, res) {
   //Change to your preferred action
-  res.send('Logged In!');
+  res.send(`Logged in: ${req.user}`);
 });
 
 module.exports = router;
