@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import './RegisterForm.css';
+import Form from './Form';
+import ErrorToast from './ErrorToast';
 
 const RegisterForm = () => {
   const [registerUsername, setRegisterUserName] = useState('');
@@ -20,20 +21,15 @@ const RegisterForm = () => {
   };
 
   return (
-    <div className='text-center vert-middle'>
-      <h1>Register</h1>
-      <input
-        placeholder='username'
-        onChange={(e) => setRegisterUserName(e.target.value)}
+    <React.Fragment>
+      <h1 className='title'> Register </h1>
+      <Form
+        f1={setRegisterUserName}
+        f2={setRegisterPassword}
+        runOnClick={register}
+        errorData={errorData}
       />
-      <input
-        placeholder='password'
-        onChange={(e) => setRegisterPassword(e.target.value)}
-        type='password'
-      />
-      <button onClick={register}>Register!</button>
-      <p>{errorData ? errorData : ''}</p>
-    </div>
+    </React.Fragment>
   );
 };
 

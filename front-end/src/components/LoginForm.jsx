@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import Form from './Form';
 
 const LoginForm = () => {
   const [loginUsername, setLoginName] = useState('');
@@ -28,20 +29,15 @@ const LoginForm = () => {
   };
 
   return (
-    <div>
-      <h1>LogIn</h1>
-      <input
-        placeholder='username'
-        onChange={(e) => setLoginName(e.target.value)}
+    <React.Fragment>
+      <h1 className='title'> Login </h1>
+      <Form
+        f1={setLoginName}
+        f2={setLoginPassword}
+        runOnClick={login}
+        errorData={errorData}
       />
-      <p>{errorData ? errorData : ''}</p>
-      <input
-        placeholder='password'
-        onChange={(e) => setLoginPassword(e.target.value)}
-      />
-      <button onClick={login}>Register!</button>
-      <button onClick={testGetUser}>Test Get User</button>
-    </div>
+    </React.Fragment>
   );
 };
 

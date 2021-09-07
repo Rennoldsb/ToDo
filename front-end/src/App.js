@@ -2,26 +2,32 @@ import React from 'react';
 import { Route, Link, BrowserRouter as Router } from 'react-router-dom';
 import RegisterForm from './components/RegisterForm';
 import LoginForm from './components/LoginForm';
+import ToDoPage from './views/ToDoPage';
 
 const App = () => {
   return (
     <Router>
       <div>
-        <nav class='navbar navbar-dark bg-dark'>
-          <ul class='nav justify-content-end'>
-            <li className='nav-item'>
-              <Link to='/login'>
-                <button tabIndex='-1'>User Login</button>
-              </Link>
-            </li>
-            <li className='nav-item'>
-              <Link to='/register'> User Register </Link>
-            </li>
-          </ul>
-        </nav>
+        <header class='navbar'>
+          <section class='navbar-section'></section>
+          <section class='navbar-center'>
+            <a href='/todo' className='btn btn-link'>
+              Your Todo's
+            </a>
+          </section>
+          <section class='navbar-section'>
+            <a href='/login' class='btn btn-link'>
+              Login
+            </a>
+            <a href='/register' class='btn btn-link'>
+              Register
+            </a>
+          </section>
+        </header>
 
         <Route path='/login' component={LoginForm} />
         <Route path='/register' component={RegisterForm} />
+        <Route path='/todo' component={ToDoPage} />
       </div>
     </Router>
   );
