@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 
-const NewToDo = () => {
+const NewToDo = (props) => {
   const [todo, setTodo] = useState('');
   const [errorData, setErrorData] = useState('');
+  const getUser = props.func;
 
   const newToDo = () => {
     axios({
@@ -13,7 +14,10 @@ const NewToDo = () => {
       },
       withCredentials: true,
       url: 'http://localhost:4000/todo',
-    }).catch((e) => setErrorData(e.response.data));
+    })
+      .then(() => setTodo(''))
+      .then(() => getUser())
+      .catch((e) => setErrorData(e.response.data));
   };
 
   return (
@@ -23,10 +27,16 @@ const NewToDo = () => {
           New ToDo
         </label>
         <input
+          value={todo}
           className='form-input'
           onChange={(e) => setTodo(e.target.value)}
           placeholder='New Todo'
           id='newTodo'
+          onKeyPress={(event) => {
+            if (event.key === 'Enter') {
+              newToDo();
+            }
+          }}
         />
         <button onClick={newToDo}>Submit New Todo!</button>
       </div>

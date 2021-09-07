@@ -16,16 +16,16 @@ router.post('/todo', async (req, res) => {
   });
 });
 
-router.get('/todo/delete/:id', async (req, res) => {
+router.delete('/todo/delete/:id', async (req, res) => {
   User.findOneAndUpdate(
     { username: req.user.username },
     { $pull: { todos: { _id: req.params.id } } },
     { new: true },
     function (error, doc) {
       if (error) {
-        console.log(error);
+        res.status(400).send(error);
       } else {
-        console.log(doc);
+        res.status(204).send('Task Deleted');
       }
     }
   );

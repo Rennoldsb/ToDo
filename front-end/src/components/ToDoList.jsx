@@ -1,27 +1,28 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
-import RemoveTodo from './RemoveTodo';
 
-const ToDoList = () => {
+const ToDoList = (props) => {
   const [errorData, setErrorData] = useState('');
-  const [toDos, setToDos] = useState([]);
+  const dataArray = props.data;
+  const getUser = props.func;
 
-  useEffect(() => {
-    axios({
-      method: 'get',
-      withCredentials: true,
-      url: 'http://localhost:4000/user',
-    })
-      .then((data) => {
-        setToDos(data.data.todos);
+  const removeTodo = (id) => {
+    return function () {
+      axios({
+        method: 'delete',
+        withCredentials: true,
+        url: `http://localhost:4000/todo/delete/${id}`,
       })
-      .catch((e) => setErrorData(e));
-  });
+        .then(() => getUser())
+        .catch((e) => setErrorData(e))
+        .then(() => console.log(errorData));
+    };
+  };
 
   return (
     <div>
       <p>
-        {toDos.map((todo, i) => {
+        {dataArray.map((todo, i) => {
           return (
             <div key={i} class='tile'>
               <div class='tile-content'>
@@ -30,7 +31,9 @@ const ToDoList = () => {
                 </p>
               </div>
               <div class='tile-action'>
-                <RemoveTodo id={todo._id} />
+                <button onClick={removeTodo(todo._id)} class='btn btn-primary'>
+                  Delete ToDo
+                </button>
                 <p>{todo._id}</p>
               </div>
             </div>
