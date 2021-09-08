@@ -9,6 +9,15 @@ router.get('/user', (req, res) => {
   res.send(req.user);
 });
 
+router.get('/logout', (req, res) => {
+  req.logout();
+  req.session.destroy((e) => {
+    res.clearCookie('connect.sid');
+    res.status(200).send('Logged Out');
+    console.log(req.isAuthenticated());
+  });
+});
+
 router.post('/register', async (req, res) => {
   if (!ValidateEmail(req.body.username)) {
     res.status(400).send('Must be a valid email');
@@ -52,7 +61,8 @@ router.post('/register', async (req, res) => {
 
 router.post('/login', passport.authenticate('local'), function (req, res) {
   //Change to your preferred action
-  res.status(200).send('Successfully logged in');
+  res.status(200).json(req.user.username);
+  console.log(req.isAuthenticated());
 });
 
 module.exports = router;

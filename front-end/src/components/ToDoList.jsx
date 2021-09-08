@@ -14,8 +14,10 @@ const ToDoList = (props) => {
         url: `http://localhost:4000/todo/delete/${id}`,
       })
         .then(() => getUser())
-        .catch((e) => setErrorData(e))
-        .then(() => console.log(errorData));
+        .catch((e) => {
+          setErrorData(e);
+          console.log(errorData);
+        });
     };
   };
 

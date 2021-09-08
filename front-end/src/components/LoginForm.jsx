@@ -2,12 +2,19 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import Form from './Form';
 import { useHistory } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { ActionCreators } from '../state';
 
 const LoginForm = () => {
   const [loginUsername, setLoginName] = useState('');
   const [loginPassword, setLoginPassword] = useState('');
   const [errorData, setErrorData] = useState('');
   let history = useHistory();
+
+  const dispatch = useDispatch();
+
+  const { authUser } = bindActionCreators(ActionCreators, dispatch);
 
   const login = () => {
     axios({
@@ -19,9 +26,13 @@ const LoginForm = () => {
       withCredentials: true,
       url: 'http://localhost:4000/login',
     })
-      .then((res) =>
-        res.status === 200 ? history.push('/todo') : console.log('error')
-      )
+      .then((res) => {
+        authUser({
+          isAuthenticated: true,
+          user: res.data,
+        });
+        res.status === 200 ? history.push('/todo') : console.log('error');
+      })
       .catch((e) => setErrorData(e.response.data));
   };
 
