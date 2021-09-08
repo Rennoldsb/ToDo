@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import Form from './Form';
+import { useHistory } from 'react-router-dom';
 
 const LoginForm = () => {
   const [loginUsername, setLoginName] = useState('');
   const [loginPassword, setLoginPassword] = useState('');
   const [errorData, setErrorData] = useState('');
+  let history = useHistory();
 
   const login = () => {
     axios({
@@ -16,16 +18,11 @@ const LoginForm = () => {
       },
       withCredentials: true,
       url: 'http://localhost:4000/login',
-    }).catch((e) => setErrorData(e.response.data));
-  };
-
-  const testGetUser = async () => {
-    const getUser = await axios({
-      method: 'get',
-      withCredentials: true,
-      url: 'http://localhost:4000/user',
-    });
-    console.log(getUser);
+    })
+      .then((res) =>
+        res.status === 200 ? history.push('/todo') : console.log('error')
+      )
+      .catch((e) => setErrorData(e.response.data));
   };
 
   return (
@@ -36,6 +33,7 @@ const LoginForm = () => {
         f2={setLoginPassword}
         runOnClick={login}
         errorData={errorData}
+        name='Login'
       />
     </React.Fragment>
   );

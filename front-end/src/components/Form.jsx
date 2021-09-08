@@ -35,7 +35,7 @@ function Form(props) {
       </form>
       <div className='button'>
         <button className='btn' onClick={props.runOnClick}>
-          Register!
+          {props.name}
         </button>
       </div>
       <div className='error'>

@@ -3,7 +3,6 @@ import axios from 'axios';
 
 const NewToDo = (props) => {
   const [todo, setTodo] = useState('');
-  const [errorData, setErrorData] = useState('');
   const getUser = props.func;
 
   const newToDo = () => {
@@ -17,7 +16,7 @@ const NewToDo = (props) => {
     })
       .then(() => setTodo(''))
       .then(() => getUser())
-      .catch((e) => setErrorData(e.response.data));
+      .catch((e) => console.log(e.response.data));
   };
 
   return (
