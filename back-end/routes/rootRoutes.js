@@ -61,7 +61,6 @@ router.post('/register', async (req, res) => {
 router.post('/login', passport.authenticate('local'), function (req, res) {
   //Change to your preferred action
   res.status(200).json(req.user.username);
-  console.log(req.isAuthenticated());
 });
 
 module.exports = router;

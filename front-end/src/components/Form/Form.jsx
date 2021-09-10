@@ -1,5 +1,5 @@
 import React from 'react';
-import ErrorToast from './ErrorToast';
+import ErrorToast from '../ErrorToast';
 import './Form.css';
 
 function Form(props) {

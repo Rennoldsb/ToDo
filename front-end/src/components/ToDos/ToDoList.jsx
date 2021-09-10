@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import './ToDoList.css';
 
 const ToDoList = (props) => {
   const [errorData, setErrorData] = useState('');
@@ -11,7 +12,7 @@ const ToDoList = (props) => {
       axios({
         method: 'delete',
         withCredentials: true,
-        url: `http://localhost:4000/todo/delete/${id}`,
+        url: `/todo/delete/${id}`,
       })
         .then(() => getUser())
         .catch((e) => {
@@ -26,17 +27,25 @@ const ToDoList = (props) => {
       <p>
         {dataArray.map((todo, i) => {
           return (
-            <div onClick={removeTodo} key={i} class='tile'>
+            <div
+              onClick={removeTodo(todo._id)}
+              key={i}
+              className='tile tasklist'
+            >
               <div class='tile-content'>
-                <p class='tile-title'>
-                  <h3>Task {todo.task}</h3>
+                <p class='tile-title center'>
+                  <h3>
+                    <strong>Task</strong>: {todo.task}
+                  </h3>
                 </p>
               </div>
               <div class='tile-action'>
-                <button onClick={removeTodo(todo._id)} class='btn btn-primary'>
+                <button
+                  onClick={removeTodo(todo._id)}
+                  class='btn btn-primary center'
+                >
                   Delete ToDo
                 </button>
-                <p>{todo._id}</p>
               </div>
             </div>
           );

@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import NewToDo from '../components/NewToDo';
-import ToDoList from '../components/ToDoList';
+import NewToDo from '../components/ToDos/NewToDo';
+import ToDoList from '../components/ToDos/ToDoList';
 import axios from 'axios';
+import HomePage from './HomePage';
 
 const ToDoPage = () => {
   const [data, setData] = useState([]);
@@ -10,7 +11,7 @@ const ToDoPage = () => {
     const response = await axios({
       method: 'get',
       withCredentials: true,
-      url: 'http://localhost:4000/user',
+      url: '/user',
     });
     setData(response.data.todos);
   };
@@ -19,6 +20,9 @@ const ToDoPage = () => {
     GetUser();
   }, []);
 
+  if (data === undefined) {
+    return <HomePage />;
+  }
   return (
     <React.Fragment>
       <NewToDo func={GetUser} />

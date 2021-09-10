@@ -14,7 +14,7 @@ const LogOut = () => {
     axios({
       method: 'get',
       withCredentials: true,
-      url: 'http://localhost:4000/logout',
+      url: '/logout',
     })
       .then((res) =>
         authUser({
@@ -22,7 +22,7 @@ const LogOut = () => {
           user: '',
         })
       )
-      .then(history.push('/login'));
+      .then(history.push('/'));
   };
 
   return (

@@ -4,6 +4,9 @@ const User = require('../models/user');
 
 router.get('/todo', (req, res) => {
   User.findOne({ username: req.user.username }, (e, data) => {
+    if (e) {
+      res.status(403).send('You are not authorized to view this page.');
+    }
     res.json(data.todos);
   });
 });

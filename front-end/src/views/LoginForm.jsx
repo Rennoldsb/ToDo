@@ -1,28 +1,30 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import Form from './Form';
+import Form from '../components/Form/Form';
 import { useHistory } from 'react-router-dom';
-import { ActionCreators } from '../state';
 import { useDispatch } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import { ActionCreators } from '../state';
 
-const RegisterForm = () => {
-  const [registerUsername, setRegisterUserName] = useState('');
-  const [registerPassword, setRegisterPassword] = useState('');
+const LoginForm = () => {
+  const [loginUsername, setLoginName] = useState('');
+  const [loginPassword, setLoginPassword] = useState('');
   const [errorData, setErrorData] = useState('');
-  const dispatch = useDispatch();
-  const { authUser } = bindActionCreators(ActionCreators, dispatch);
   let history = useHistory();
 
-  const register = () => {
+  const dispatch = useDispatch();
+
+  const { authUser } = bindActionCreators(ActionCreators, dispatch);
+
+  const login = () => {
     axios({
       method: 'post',
       data: {
-        username: registerUsername,
-        password: registerPassword,
+        username: loginUsername,
+        password: loginPassword,
       },
       withCredentials: true,
-      url: 'http://localhost:4000/register',
+      url: '/login',
     })
       .then((res) => {
         if (res.status === 200) {
@@ -38,16 +40,16 @@ const RegisterForm = () => {
 
   return (
     <React.Fragment>
-      <h1 className='title'> Register </h1>
+      <h1 className='title'> Login </h1>
       <Form
-        f1={setRegisterUserName}
-        f2={setRegisterPassword}
-        runOnClick={register}
+        f1={setLoginName}
+        f2={setLoginPassword}
+        runOnClick={login}
         errorData={errorData}
-        name='Register!'
+        name='Login'
       />
     </React.Fragment>
   );
 };
 
-export default RegisterForm;
+export default LoginForm;

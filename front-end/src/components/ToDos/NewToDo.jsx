@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import './NewToDo.css';
 
 const NewToDo = (props) => {
   const [todo, setTodo] = useState('');
@@ -12,7 +13,7 @@ const NewToDo = (props) => {
         task: todo,
       },
       withCredentials: true,
-      url: 'http://localhost:4000/todo',
+      url: '/todo',
     })
       .then(() => setTodo(''))
       .then(() => getUser())
@@ -20,9 +21,9 @@ const NewToDo = (props) => {
   };
 
   return (
-    <div>
+    <div class='newToDo'>
       <div>
-        <label class='form-label' for='newTodo'>
+        <label class='form-label text-center' for='newTodo'>
           New ToDo
         </label>
         <input
@@ -37,7 +38,6 @@ const NewToDo = (props) => {
             }
           }}
         />
-        <button onClick={newToDo}>Submit New Todo!</button>
       </div>
     </div>
   );

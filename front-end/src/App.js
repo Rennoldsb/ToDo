@@ -1,11 +1,16 @@
 import React from 'react';
-import { Route, BrowserRouter as Router } from 'react-router-dom';
-import RegisterForm from './components/RegisterForm';
-import LoginForm from './components/LoginForm';
+import {
+  Route,
+  BrowserRouter as Router,
+  Switch,
+  Redirect,
+} from 'react-router-dom';
+import RegisterForm from './views/RegisterForm';
+import LoginForm from './views/LoginForm';
 import ToDoPage from './views/ToDoPage';
 import LogOut from './components/LogOut';
 import { useSelector } from 'react-redux';
-import MustBeAuth from './views/MustBeAuth';
+import HomePage from './views/HomePage';
 
 const App = () => {
   const state = useSelector((state) => state);
@@ -32,13 +37,17 @@ const App = () => {
             </a>
           </section>
         </header>
-        <Route path='/login' component={LoginForm} />
-        <Route path='/register' component={RegisterForm} />
-        {state.auth.isAuthenticated ? (
-          <Route path='/todo' component={ToDoPage} />
-        ) : (
-          <Route path='/todo' component={MustBeAuth} />
-        )}
+        <Switch>
+          <Route path='/login' component={LoginForm} />
+          <Route path='/register' component={RegisterForm} />
+          {state.auth.isAuthenticated ? (
+            <Route path='/todo' component={ToDoPage} />
+          ) : (
+            <Route path='/todo' component={HomePage} />
+          )}
+          <Route path='/' component={HomePage} />
+          <Redirect from='*' to={'/'} />
+        </Switch>
       </div>
     </Router>
   );
