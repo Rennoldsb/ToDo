@@ -27,11 +27,13 @@ const LoginForm = () => {
       url: 'http://localhost:4000/login',
     })
       .then((res) => {
-        authUser({
-          isAuthenticated: true,
-          user: res.data,
-        });
-        res.status === 200 ? history.push('/todo') : console.log('error');
+        if (res.status === 200) {
+          history.push('/todo');
+          authUser({
+            isAuthenticated: true,
+            user: res.data,
+          });
+        }
       })
       .catch((e) => setErrorData(e.response.data));
   };

@@ -14,7 +14,6 @@ router.get('/logout', (req, res) => {
   req.session.destroy((e) => {
     res.clearCookie('connect.sid');
     res.status(200).send('Logged Out');
-    console.log(req.isAuthenticated());
   });
 });
 

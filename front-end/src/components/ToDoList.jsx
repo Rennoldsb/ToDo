@@ -26,7 +26,7 @@ const ToDoList = (props) => {
       <p>
         {dataArray.map((todo, i) => {
           return (
-            <div key={i} class='tile'>
+            <div onClick={removeTodo} key={i} class='tile'>
               <div class='tile-content'>
                 <p class='tile-title'>
                   <h3>Task {todo.task}</h3>

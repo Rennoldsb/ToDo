@@ -5,10 +5,10 @@ import LoginForm from './components/LoginForm';
 import ToDoPage from './views/ToDoPage';
 import LogOut from './components/LogOut';
 import { useSelector } from 'react-redux';
+import MustBeAuth from './views/MustBeAuth';
 
 const App = () => {
   const state = useSelector((state) => state);
-
   return (
     <Router>
       <div>
@@ -34,7 +34,11 @@ const App = () => {
         </header>
         <Route path='/login' component={LoginForm} />
         <Route path='/register' component={RegisterForm} />
-        <Route path='/todo' component={ToDoPage} />
+        {state.auth.isAuthenticated ? (
+          <Route path='/todo' component={ToDoPage} />
+        ) : (
+          <Route path='/todo' component={MustBeAuth} />
+        )}
       </div>
     </Router>
   );
